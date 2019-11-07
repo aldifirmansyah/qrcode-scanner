@@ -22,6 +22,22 @@ const video = document.getElementById('video');
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
 
+// Elements for taking the snapshot
+// Trigger photo take
+snap.addEventListener("click", function() {
+	context.drawImage(video, 0, 0, 300, 300);
+	console.log(canvas.toDataURL());
+	qrcode.callback = function(s) {
+		console.log(s);
+		result.textContent = s;
+	}
+	qrcode.decode(canvas.toDataURL());
+});
+
+setCamera.addEventListener("click", function() {
+	turnOnCamera();
+});
+
 const turnOnCamera = async() => {
 	try {
 		// Get access to the camera!
@@ -43,22 +59,6 @@ const turnOnCamera = async() => {
 		setCamera.classList.remove("hidden");
 	}
 }
-
-// Elements for taking the snapshot
-// Trigger photo take
-snap.addEventListener("click", function() {
-	context.drawImage(video, 0, 0, 300, 300);
-	console.log(canvas.toDataURL());
-	qrcode.callback = function(s) {
-		console.log(s);
-		result.textContent = s;
-	}
-	qrcode.decode(canvas.toDataURL());
-});
-
-setCamera.addEventListener("click", function() {
-	turnOnCamera();
-});
 
 turnOnCamera();
 
